@@ -21,3 +21,21 @@ let result_part_1 =
   |> (function
       | Some (x, y) -> Some (x * y)
       | _ -> None)
+
+let find_triplet original_list =
+  let rec find_triplet list1 list2 list3 =
+    match list1, list2, list3 with
+    | [], [], [] -> None
+    | [], [], _ :: r3 -> find_triplet original_list original_list r3
+    | [], _ :: r2, _ -> find_triplet original_list r2 list3
+    | h1 :: _, h2 :: _, h3 :: _ when h1 + h2 + h3 = 2020 -> Some (h1, h2, h3)
+    | _ :: r1, _, _ -> find_triplet r1 list2 list3
+  in
+  find_triplet original_list original_list original_list
+
+let result_part_2 =
+  input
+  |> find_triplet
+  |> (function
+      | Some (x, y, z) -> Some (x * y * z)
+      | _ -> None)
