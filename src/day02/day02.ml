@@ -24,17 +24,13 @@ let input =
   |> List.map ~f:(fun x -> Option.value_exn x)
 
 let result_part_1 =
-  input
-  |> List.filter ~f:begin fun {pos1; pos2; letter; password} ->
+  List.count input ~f:begin fun {pos1; pos2; letter; password} ->
     let letter_count = password |> String.to_list |> List.filter ~f:(Char.equal letter) |> List.length in
     (letter_count >= pos1) && (letter_count <= pos2) end
-  |> List.length
 
 let result_part_2 =
-  input
-  |> List.filter ~f:begin fun {pos1; pos2; letter; password} ->
+  List.count input ~f:begin fun {pos1; pos2; letter; password} ->
     let letter1 = String.get password (pos1 - 1) in
     let letter2 = String.get password (pos2 - 1) in
     (Char.(letter = letter1) || Char.(letter = letter2)) && Char.(letter1 <> letter2)
   end
-  |> List.length
